@@ -102,6 +102,7 @@ export interface InitializeExplorePayload {
   eventBridge: Emitter;
   queries: DataQuery[];
   range: TimeRange;
+  mode: ExploreMode;
   ui: ExploreUIState;
 }
 
