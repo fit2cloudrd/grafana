@@ -131,14 +131,16 @@ func (hs *HTTPServer) setIndexViewData(c *m.ReqContext) (*dtos.IndexViewData, er
 		{Text: "Snapshots", Id: "snapshots", Url: setting.AppSubUrl + "/dashboard/snapshots", Icon: "gicon gicon-snapshots"},
 	}
 
-	data.NavTree = append(data.NavTree, &dtos.NavLink{
-		Text:     "Dashboards",
-		Id:       "dashboards",
-		SubTitle: "Manage dashboards & folders",
-		Icon:     "gicon gicon-dashboard",
-		Url:      setting.AppSubUrl + "/",
-		Children: dashboardChildNavs,
-	})
+	if setting.ExploreEnabled && (c.OrgRole == m.ROLE_ADMIN || c.OrgRole == m.ROLE_EDITOR) {
+		data.NavTree = append(data.NavTree, &dtos.NavLink{
+			Text:     "Dashboards",
+			Id:       "dashboards",
+			SubTitle: "Manage dashboards & folders",
+			Icon:     "gicon gicon-dashboard",
+			Url:      setting.AppSubUrl + "/",
+			Children: dashboardChildNavs,
+		})
+	}
 
 	if setting.ExploreEnabled && (c.OrgRole == m.ROLE_ADMIN || c.OrgRole == m.ROLE_EDITOR || setting.ViewersCanEdit) {
 		data.NavTree = append(data.NavTree, &dtos.NavLink{
